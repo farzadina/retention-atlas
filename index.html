@@ -1149,7 +1149,7 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
       const cr = el("rect", { x: c.x0, y: c.cy, width: Math.max(1, c.x1 - c.x0), height: c.chH, style: `fill:transparent;cursor:${canWatch ? "pointer" : "default"}` }, svg);
       cr.addEventListener("pointermove", (e) => {
         c.rect.style.fill = "var(--axis)";
-        showTip(`<div class="tt">${esc(c.title)}</div><div class="m">${clock(c.s0)} to ${clock(c.e0)} · retention ${P(at(v, c.s0))} → ${P(at(v, Math.min(c.e0, v.dur * 0.99)))}</div>${canWatch ? `<div class="m">Click to play this chapter</div>` : ""}`, e.clientX, e.clientY);
+        showTip(`<div class="tt">${esc(c.title)}</div><div class="m">${P(at(v, c.s0))} → ${P(at(v, Math.min(c.e0, v.dur * 0.99)))}</div>`, e.clientX, e.clientY);
       });
       cr.addEventListener("pointerleave", () => { c.rect.style.fill = "var(--track)"; hideTip(); });
       cr.addEventListener("click", () => { if (canWatch) seekTo(c.s0); });
