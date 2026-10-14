@@ -370,18 +370,11 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
 
   <section>
     <div class="sh"><h2>Where viewers drop off</h2><p class="note" id="curves-note"></p></div>
-    <div class="row">
-      <div class="panel">
-        <div class="ph"><h3 id="curves-title">Audience retention by channel</h3><div class="seg" id="cmode"></div></div>
-        <div class="legend" id="lg-curves" style="margin-bottom:6px"></div>
-        <div class="chart" id="curves"></div>
-        <p class="caption" id="cap-curves"></p>
-      </div>
-      <div class="panel">
-        <div class="ph"><h3>Where viewers leave</h3></div>
-        <div class="go" id="go"></div>
-        <p class="caption" id="cap-go"></p>
-      </div>
+    <div class="panel">
+      <div class="ph"><h3 id="curves-title">Audience retention by channel</h3><div class="seg" id="cmode"></div></div>
+      <div class="legend" id="lg-curves" style="margin-bottom:6px"></div>
+      <div class="chart" id="curves"></div>
+      <p class="caption" id="cap-curves"></p>
     </div>
   </section>
 
@@ -900,29 +893,6 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
     document.getElementById("tested").innerHTML = TESTED.map(([h, k, d]) => `<div class="t-row"><span class="verdict ${L[k][1]}">${L[k][0]}</span><div><div class="t-h">${h}</div><div class="t-d">${d}</div></div></div>`).join("");
   }
 
-  /* ---------- where viewers leave ---------- */
-  function renderGo() {
-    const box = document.getElementById("go"), cap = document.getElementById("cap-go");
-    if (!isLong()) {
-      box.innerHTML = `<p class="empty">Doesn't apply to Shorts, because replays push retention above 100%.</p>`;
-      cap.textContent = "";
-      return;
-    }
-    const groups = groupsOf(scope().filter((v) => v.a60 != null));
-    const segs = [["Leave in the first minute", "var(--ord3)"], ["Leave later", "var(--ord1)"], ["Watch to the end", null]];
-    let h = `<div class="go-head" style="grid-template-columns:repeat(3,minmax(0,1fr))">${segs.map(([l, c]) => `<span><i style="background:${c || "linear-gradient(90deg, var(--ch0) 25%, var(--ch1) 25% 50%, var(--ch2) 50% 75%, var(--ch3) 75%)"}"></i>${l}</span>`).join("")}</div>`;
-    groups.forEach((g) => {
-      const early = 100 - R(med(g.vids.map((v) => v.a60))), end = R(med(g.vids.map((v) => v.end)));
-      const vals = [early, 100 - early - end, end];
-      const dim = S.focus != null && g.c !== S.focus;
-      h += `<div class="go-row" style="opacity:${dim ? 0.45 : 1}"><div class="go-name">${dot(g.c)}${esc(CH[g.c].name)} <span class="mono" style="color:var(--muted);font-weight:400;font-size:12px">~${R(med(g.vids.map((v) => v.dur)) / 60)} min videos</span></div>
-        <div class="go-bar" role="img" aria-label="${esc(CH[g.c].name)}: ${vals.map((v, k) => `${v}% ${segs[k][0].toLowerCase()}`).join(", ")}">${vals.map((v, k) => `<i style="flex:${Math.max(0, v)};background:${segs[k][1] || `var(--ch${g.c})`}"></i>`).join("")}</div>
-        <div class="go-nums" style="grid-template-columns:repeat(3,minmax(0,1fr))">${vals.map((v) => `<span>${v}%</span>`).join("")}</div></div>`;
-    });
-    box.innerHTML = h;
-    cap.textContent = "Median video per channel, 5 min or longer.";
-  }
-
   /* ---------- lookup ---------- */
   function fillChannelSelect() {
     const c = document.getElementById("lk-ch");
@@ -1219,7 +1189,7 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
 
   /* ---------- orchestrate ---------- */
   function renderAll() {
-    renderFilters(); renderKpis(); renderFindings(); renderGo(); renderCurves(); renderStructure(); renderOpenings(); renderLookup(); renderTable();
+    renderFilters(); renderKpis(); renderFindings(); renderCurves(); renderStructure(); renderOpenings(); renderLookup(); renderTable();
   }
   renderSource();
   renderTested();
