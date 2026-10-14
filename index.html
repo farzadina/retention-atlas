@@ -658,7 +658,7 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
               p: (longest.c === lowP.c ? `Its videos are the longest (about ${R(lowP.len / 60)} min).` : "") + sameStart,
               ev: `${wl.length} videos`,
               wl: "What it means",
-              why: "Average % viewed punishes long videos. Average view duration is the fairer number when you compare channels.",
+              why: "Length moves both numbers: longer videos get a lower % viewed and a higher average view duration. To compare channels, compare videos of similar length.",
             });
           } else {
             out.push({
@@ -667,7 +667,7 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
               p: [...cs].sort((p, q) => q.avd - p.avd).map((x) => `${SHORTNAME[x.c]} ${clock(x.avd)}`).join(", ") + "." + sameStart,
               ev: `${wl.length} videos`,
               wl: "What it means",
-              why: "Average % viewed punishes long videos. Average view duration is the fairer number when you compare channels.",
+              why: "Length moves both numbers: longer videos get a lower % viewed and a higher average view duration. To compare channels, compare videos of similar length.",
             });
           }
         }
@@ -681,7 +681,7 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
             p: `Under 15 min: ${P(ps)} viewed. Over 15 min: ${P(pl)} viewed.`,
             ev: `${sh.length} vs ${lo.length} videos` + (Math.min(sh.length, lo.length) < 6 ? ", small groups" : ""),
             wl: "What it means",
-            why: "Average % viewed punishes long videos. Average view duration is the fairer number when lengths differ.",
+            why: "Length moves both numbers: longer videos get a lower % viewed and a higher average view duration. To compare channels, compare videos of similar length.",
           });
         }
       }
@@ -756,7 +756,7 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
       why: "New viewers are where growth comes from, so their retention is the more useful number to compare.",
     });
 
-    box.innerHTML = out.map((o) => `<article class="find"><div class="big">${o.big}${o.unit ? `<span>${o.unit}</span>` : ""}</div><h3>${o.h}</h3>${o.list ? `<ul>${o.items.map((i) => `<li>${i}</li>`).join("")}</ul>` : o.p ? `<p>${o.p}</p>` : ""}${o.ev ? `<span class="ev">${o.ev}</span>` : ""}<p class="why"><b>${o.wl}</b>${o.why}</p></article>`).join("");
+    box.innerHTML = out.map((o) => `<article class="find"><div class="big">${o.big}${o.unit ? `<span>${o.unit}</span>` : ""}</div><h3>${o.h}</h3>${o.list ? `<ul>${o.items.map((i) => `<li>${i}</li>`).join("")}</ul>` : o.p ? `<p>${o.p}</p>` : ""}<p class="why"><b>${o.wl}</b>${o.why}</p></article>`).join("");
     box.querySelectorAll("[data-vid]").forEach((b) => (b.onclick = () => openVideo(+b.dataset.vid)));
   }
 
