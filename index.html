@@ -464,11 +464,6 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
   </section>
 
   <section>
-    <div class="sh"><h2>CAN, CAN'T, NOW</h2><p class="note">The buckets from the Marketing Philosophy doc. Share of each format's videos that do each thing.</p></div>
-    <div class="panel"><div class="dt-wrap" style="max-height:none"><table class="dt lens" id="lens"></table></div><p class="caption" id="lens-cap"></p></div>
-  </section>
-
-  <section>
     <div class="sh"><h2>Every video</h2></div>
     <div class="seg" id="fpick" style="margin-bottom:12px"></div>
     <div class="tbl-wrap"><table id="ftbl"></table></div>
@@ -498,14 +493,6 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
   ];
   const FNAME = { case: "Case study", claim: "Claim and proof", guide: "Guide", list: "List", other: "Other" };
   const OTHER_DESC = { UY9mvHPD_gc: "a reaction video", Az5HhMorL_o: "a channel trailer", vJRJqpMCqw8: "a podcast panel" };
-  // order matches v.fl
-  const LENS = [
-    ["Shows it working on a household", "CAN"],
-    ["Shows why it's hard to do alone", "CAN'T"],
-    ["Gives a reason to act now", "NOW"],
-    ["Shows what fails, then the fix", "Solution demo"],
-    ["Argues against common advice", "Opinion angle"],
-  ];
   const NS = "http://www.w3.org/2000/svg";
 
   /* ---------- math ---------- */
@@ -1281,7 +1268,7 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
 
   /* ---------- formats tab ---------- */
   const fsel = () => V.filter((v) => v.fm && (S.focus == null || v.c === S.focus));
-  function renderFormats() { renderFCards(); renderFViews(); renderLens(); renderFTable(); }
+  function renderFormats() { renderFCards(); renderFViews(); renderFTable(); }
   function renderFCards() {
     const s = fsel(), box = document.getElementById("fcards");
     box.innerHTML = FMTS.map((f) => {
@@ -1334,19 +1321,6 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
     document.getElementById("cap-fv").textContent = S.focus == null
       ? `Pooled, lists have the lowest median (${outl(med(li.map((v) => v.out)))}). Part of that is channel mix: ${P(lowShare * 100)} of the lists are ${CH[lowC.c].name}'s, whose scores run low overall (median ${outl(lowC.m)}). Compared within each channel, the gap shrinks and isn't reliable.`
       : `Medians are for ${CH[S.focus].name} only. With this few videos per format, differences inside one channel can't be called.`;
-  }
-  function renderLens() {
-    const s = fsel().filter((v) => v.fm !== "other");
-    const rows = FMTS.map((f) => {
-      const L = s.filter((v) => v.fm === f.k);
-      return { f, n: L.length, p: LENS.map((_, j) => (L.length ? (L.filter((v) => v.fl[j]).length / L.length) * 100 : null)) };
-    });
-    document.getElementById("lens").innerHTML = `<thead><tr><th>Format</th>${LENS.map(([a, b]) => `<th>${a}<span class="sub">${b}</span></th>`).join("")}</tr></thead><tbody>` +
-      rows.map((r) => `<tr><td style="font-family:var(--f-body);font-size:13.5px;color:var(--ink)">${r.f.name} <span class="mono" style="color:var(--muted);font-size:11.5px">${r.n}</span></td>${r.p.map((p) => `<td>${p == null ? "n/a" : `<span class="lb"><i style="width:${p}%"></i></span>${P(p)}`}</td>`).join("")}</tr>`).join("") + `</tbody>`;
-    const cs = rows.find((r) => r.f.k === "case"), cl = rows.find((r) => r.f.k === "claim");
-    document.getElementById("lens-cap").textContent = S.focus == null && cs.n && cl.n
-      ? `Case studies show a household ${cs.p[0] >= 99.5 ? "every time" : `${P(cs.p[0])} of the time`} and show why it's hard to do alone in ${P(cs.p[1])}, but only ${P(cs.p[2])} give a reason to act now. Claims carry most of the urgency (${P(cl.p[2])}) and most of the against-common-advice angles (${P(cl.p[4])}).`
-      : "";
   }
   function renderFTable() {
     const s = fsel(), pick = document.getElementById("fpick");
