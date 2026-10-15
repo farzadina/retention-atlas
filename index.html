@@ -359,11 +359,30 @@ blockquote { margin: 2px 0 0; padding: 8px 12px; border-left: 2px solid var(--ax
 #ftbl { min-width: 960px; }
 #ftbl .tx { text-align: left; }
 #ftbl td.ab { text-align: left; white-space: normal; min-width: 240px; max-width: 380px; color: var(--ink-2); font-size: 13px; line-height: 1.4; }
+
+/* dashboard switcher */
+.switch { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 20px; }
+.switch a { flex: 1 1 280px; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); text-decoration: none; }
+.switch .sw-t { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.switch b { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+.switch .sw-t span { font-size: 13.5px; color: var(--muted); }
+.switch em { font-style: normal; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; }
+.switch a:hover:not([aria-current]) { border-color: var(--ink-2); }
+.switch a:hover:not([aria-current]) em { background: var(--ink); color: var(--page); border-color: var(--ink); }
+.switch a[aria-current="page"] { background: var(--sel); border-color: var(--sel); cursor: default; }
+.switch a[aria-current="page"] b, .switch a[aria-current="page"] .sw-t span, .switch a[aria-current="page"] em { color: var(--sel-ink); }
+.switch a[aria-current="page"] em { border-color: currentColor; opacity: 0.7; }
+.switch a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.switch + .mast { padding-top: 22px; }
 </style>
 
 </head>
 <body style="margin:0">
 <div class="wrap">
+  <nav class="switch" aria-label="Dashboards">
+    <a href="https://farzadina.github.io/peak-landscape/"><span class="sw-t"><b>Peak Landscape</b><span>The Peak vs four retirement channels</span></span><em>Switch →</em></a>
+    <a href="https://farzadina.github.io/retention-atlas/" aria-current="page"><span class="sw-t"><b>Retention Atlas</b><span>Where viewers drop off, four channels</span></span><em>Viewing</em></a>
+  </nav>
   <header class="mast">
     <div>
       <div class="eyebrow">Audience retention · retirement finance on YouTube</div>
